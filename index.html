@@ -8,8 +8,87 @@
     <link rel="stylesheet" type="text/css" href="./bootstrap/css/bootstrap-theme.min.css">
     <script src="./bootstrap/js/jquery-2.1.1.min.js"></script>
     <script src="./bootstrap/js/bootstrap.min.js"></script>
+    <style>
+    	textarea {
+    		resize: none;
+    	}
+    </style>
+    <script>
+    $(function() {
+
+    	$("#words").focus();
+
+        $("#auto").click(function() {
+            $("#auto").removeClass("btn-default").addClass("btn-primary");
+            $("#chinese").removeClass("btn-primary").addClass("btn-default");
+            $("#english").removeClass("btn-primary").addClass("btn-default");
+            $("#words").focus();
+        });
+
+    	$("#chinese").click(function() {
+            $("#auto").removeClass("btn-primary").addClass("btn-default");
+    		$("#chinese").removeClass("btn-default").addClass("btn-primary");
+    		$("#english").removeClass("btn-primary").addClass("btn-default");
+    		$("#words").focus();
+    	});
+
+    	$("#english").click(function() {
+            $("#auto").removeClass("btn-primary").addClass("btn-default");
+    		$("#chinese").removeClass("btn-primary").addClass("btn-default");
+    		$("#english").removeClass("btn-default").addClass("btn-primary");
+    		$("#words").focus();
+    	});
+
+    	$("#words").keyup(function() {
+            var url = "http://translate.sundabao.com/translate.php";
+    		var word = $("#words").val().trim();
+    		var param = {
+                'word' : word,
+                'from' : $(".btn-primary").attr("id"),
+            };
+
+    		$.post(url, param, function(data) {
+    			$("#translate").html(data.trans_result[0].dst);
+    		}, "json");
+    	});
+
+    	$("#words").bind("paste", function() {
+    		var url = "http://translate.sundabao.com/translate.php";
+            setTimeout(function() {
+                var word = $("#words").val().trim();
+                var param = {
+                    'word' : word,
+                    'from' : $(".btn-primary").attr("id"),
+                };
+
+                $.post(url, param, function(data) {
+                    $("#translate").html(data.trans_result[0].dst);
+                }, "json");    
+            });
+            
+    	});
+    });
+    </script>
 </head>
 <body>
-    <a class="btn btn-default">gg</a>
+
+    <div class="container">
+    	<h1>Translate</h1>
+    	<div class="row">
+    		<div class="col-md-6">
+                <button type="button" id="auto" class="btn btn-primary">自动检测</button>
+    			<button type="button" id="english" class="btn btn-default">English</button>
+		  		<button type="button" id="chinese" class="btn btn-default">汉语</button>
+		  	</div>
+    	</div>
+	  	<div class="row">
+		  	<div class="col-md-6">
+		  		<textarea class="form-control" id="words" rows="6"></textarea>
+		  	</div>
+		  	<div class="col-md-6">
+		  		<textarea class="form-control" id="translate" style="cursor: default; resize: none;" rows="6" disabled></textarea>
+		  	</div>
+		</div>
+	</div>
 </body>
 </html>
