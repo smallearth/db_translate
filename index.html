@@ -40,31 +40,36 @@
     	});
 
     	$("#words").keyup(function() {
-            var url = "http://translate.sundabao.com/translate.php";
+		var url = "http://translate.sundabao.com/translate.php";
     		var word = $("#words").val().trim();
     		var param = {
-                'word' : word,
-                'from' : $(".btn-primary").attr("id"),
-            };
+		    'word' : word,
+		    'from' : $(".btn-primary").attr("id"),
+		};
 
     		$.post(url, param, function(data) {
-    			$("#translate").html(data.trans_result[0].dst);
+		    if (data.errno === 0) {
+			alert(data.data.symbols[0].parts[0].means[0]);
+			$("#translate").html(data.data);
+		    }
     		}, "json");
     	});
 
     	$("#words").bind("paste", function() {
     		var url = "http://translate.sundabao.com/translate.php";
-            setTimeout(function() {
-                var word = $("#words").val().trim();
-                var param = {
-                    'word' : word,
-                    'from' : $(".btn-primary").attr("id"),
-                };
-
-                $.post(url, param, function(data) {
-                    $("#translate").html(data.trans_result[0].dst);
-                }, "json");    
-            });
+		setTimeout(function() {
+		    var word = $("#words").val().trim();
+		    var param = {
+			'word' : word,
+			'from' : $(".btn-primary").attr("id"),
+		    };
+    
+		    $.post(url, param, function(data) {
+		    if (data.errno === 0) {
+			$("#translate").html(data.errno);
+		    }
+    		}, "json");
+		});
             
     	});
     });
