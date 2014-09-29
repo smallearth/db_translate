@@ -44,8 +44,6 @@ class Translate {
 
         $ret = array_merge($b_translate, $y_translate);
 
-        var_dump($ret);
-
         return $ret;
 		
 	}
