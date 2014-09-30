@@ -4,7 +4,10 @@ require_once 'functions.php';
 class Translate {
 
 	public function getTranslate($word, $from, $to) {
-        $b_api_key = C('B_API_KEY');
+
+		$word_len = count(explode(' ', $word));
+
+		$b_api_key = C('B_API_KEY');
                 
 		if(empty($b_api_key)) {
 			$api_key = 'aWUYalYMnNlrRAKt65XLEGmG';
@@ -26,25 +29,40 @@ class Translate {
 			$to = 'auto';
 		}
 
-		$y_api_key = C('Y_API_KEY');
-		if($y_api_key) {
-			$y_api_key =  '2015763799';
+		if($word_len <= 4){
+
+			$y_api_key = C('Y_API_KEY');
+			if($y_api_key) {
+				$y_api_key =  '2015763799';
+			}
+
+			$y_key_from = C('Y_KEY_FROM');
+			if($y_key_from) {
+				$y_key_from = 'bgtranslate';
+			}
+			
+	        $b_url = $this->getbaidu_translate_url($b_api_key, $word, $from, $to);  
+			$b_translate = $this->getbaidu_translate($b_url);
+	                
+	        $y_url = $this->getyoudao_dict_url($y_key_from, $y_api_key, $word);
+	        $y_translate = $this->getyoudao_translate($y_url);
+
+	        if(!empty($b_translate) && !empty($y_translate)) {
+				$ret = array_merge($b_translate, $y_translate);
+	        } else {
+	        	$ret = $b_translate;
+	        }
+	        
+
+	        return $ret;
+		} else {
+			$b_url = $this->getbaidu_translate_url($b_api_key, $word, $from, $to);  
+			$ret = $this->getbaidu_translate($b_url);
+
+			return $ret;
 		}
 
-		$y_key_from = C('Y_KEY_FROM');
-		if($y_key_from) {
-			$y_key_from = 'bgtranslate';
-		}
-		
-        $b_url = $this->getbaidu_translate_url($b_api_key, $word, $from, $to);  
-		$b_translate = $this->getbaidu_translate($b_url);
-                
-        $y_url = $this->getyoudao_dict_url($y_key_from, $y_api_key, $word);
-        $y_translate = $this->getyoudao_translate($y_url);
-
-        $ret = array_merge($b_translate, $y_translate);
-
-        return $ret;
+        
 		
 	}
 
