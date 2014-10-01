@@ -50,6 +50,7 @@ $(function() {
                     });
                 }
                 if(data.hasOwnProperty("web")) {
+                    $('html, body').css('overflowY', 'auto'); 
                     $("#rest-web-tr-title").css(style_title);
                     $("#rest-web-tr").empty();
                     
@@ -91,6 +92,7 @@ $(function() {
                         });
                     }
                     if(data.hasOwnProperty("web")) {
+                        $('html, body').css('overflowY', 'auto'); 
                         $("#rest-web-tr-title").css(style_title);
                         $("#rest-web-tr").empty();
                         

@@ -1,0 +1,22 @@
+textarea {
+    resize: none;
+}
+.hidden-title {
+    display: none;
+}
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
+#wrap {
+    min-height: 100%;
+}
+
+.footer {
+    position: relative;
+    margin-top: -40px; /* negative value of footer height */
+    height: 40px;
+    clear:both;
+    background-color: #f5f5f5;
+} 
