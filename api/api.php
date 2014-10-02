@@ -1,5 +1,6 @@
 <?php
-require_once 'functions.php';
+define('__ROOT__', dirname(__FILE__));
+require __ROOT__.'/common/functions.php';
 
 class Translate {
 

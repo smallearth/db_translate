@@ -1,6 +1,6 @@
 <?php
-
-require_once 'api.php';
+define('__ROOT__', dirname(__FILE__));
+require_once __ROOT__.'/api/api.php';
 
 $client = new client();
 $client->translate();
