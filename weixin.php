@@ -3,7 +3,7 @@ define('__ROOT__', dirname(__FILE__));
 require_once __ROOT__.'/api/api.php';
 
 //define token
-define("TOKEN", "dabao_english");
+define("TOKEN", "");
 $wechatObj = new wechatCallbackapiTest();
 $wechatObj->valid();
 
@@ -61,14 +61,14 @@ class wechatCallbackapiTest
 		
     private function getTranslate($word) 
     {
-        $tr_url = 'http://openapi.baidu.com/public/2.0/bmt/translate?client_id=aWUYalYMnNlrRAKt65XLEGmG&q='.$word.'&from=auto&to=auto';
+        $tr_url = 'http://openapi.baidu.com/public/2.0/bmt/translate?client_id=YourApiLKey&q='.$word.'&from=auto&to=auto';
         $tr = json_decode(file_get_contents($tr_url), true);
         
         if(empty($tr['error_code'])) {
             $ret = $tr['trans_result'][0]['dst']."\n\r";
         }
 
-        $dict_url = 'http://openapi.baidu.com/public/2.0/translate/dict/simple?client_id=aWUYalYMnNlrRAKt65XLEGmG&q='.$word.'&from=auto&to=auto';
+        $dict_url = 'http://openapi.baidu.com/public/2.0/translate/dict/simple?client_id=YourApiLKey&q='.$word.'&from=auto&to=auto';
         $dict_tr = file_get_contents($dict_url);
         $dict_tr = json_decode($dict_tr, true);
         if($dict_tr['errno'] === 0) {
